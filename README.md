@@ -15,3 +15,11 @@ by [Carey Parker—of Firewalls Don't Stop Dragons fame](https://firewallsdontst
 \
 \
 Matter of fact, this project tries to mimic—as closely as possible—the d20key site's functionality.
+\
+\
+In my day-to-day, I do use a password manager to create these passphrases for me,
+\
+but the diceware method is a good way to get passphrases if one does not—for some reason—cannot
+\
+use a password manager.
+
