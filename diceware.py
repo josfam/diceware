@@ -58,7 +58,7 @@ def main():
     options.add_row('→', '[bold]r[blue]n[/blue][/bold]: reroll just row [blue][bold]n')
     options.add_row('', '[bold]q[/bold]: quit')
 
-    #
+    # show the first roll of dice
     dice_numbers = make_dice_nums(rows, DICE_NUMBER)
     dice_rows = DiceRows(dice_numbers)
     console.print(get_dice_and_words(dice_numbers))
@@ -69,7 +69,7 @@ def main():
         response = input('  → ')
 
         match response.lower():
-            #
+            # only allow an `r` followed by a valid row number
             case str() as s if s.startswith('r') and ''.join(s[1:]).isnumeric():
                 num_part = int(''.join(s[1:]))
                 if 1 <= num_part <= len(dice_numbers):
@@ -88,6 +88,7 @@ def main():
             case 'q':
                 print('Goodbye!')
                 sys.exit()
+            # don't change any of the dice or words
             case _:
                 clear_lines()
                 console.print(get_dice_and_words(dice_numbers))
