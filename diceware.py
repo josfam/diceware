@@ -66,7 +66,10 @@ def main():
     while True:
         # show options menu and input line
         console.print(options)
-        response = input('  → ')
+        try:
+            response = input('  → ')
+        except (KeyboardInterrupt, EOFError):
+            sys.exit('Goodbye!')
 
         match response.lower():
             # only allow an `r` followed by a valid row number
