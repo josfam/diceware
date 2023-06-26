@@ -9,7 +9,7 @@ import re
 from rich import box
 from rich.console import Console
 from rich.table import Table
-from typing import List
+from typing import List, Union
 
 import dice_db
 
@@ -115,6 +115,30 @@ def make_dice_nums(row_count: int, dice_per_row: int) -> List[List[int]]:
             dice_row.append(random.randint(1, DICE_FACES))
         dice_numbers.append(dice_row)
     return dice_numbers
+
+
+def append_dice_words(dice_nums: List[List[Union[int, str]]]):
+    """Appends, to each row of numbers, a word from the word list that corresponds to dice numbers in that row.
+
+    Args:
+        dice_nums: The list containing rows of numbers, whose words will be determined.
+
+    Returns:
+        The mutated list that has words from the word list appended to each row.
+    """
+
+    conn = sqlite3.connect(DB)
+    cur = conn.cursor()
+
+    with conn:
+        for i, dice_row in enumerate(dice_nums):
+            # turn the list of ins into a single int
+            single_number = int(''.join([str(x) for x in dice_row]))
+
+            # find the corresponding word list word and append it to the dice row
+            word = dice_db.get_word(conn, single_number)
+            dice_nums[i].append(word)
+    return dice_nums
 
 
 def get_dice_and_words(dice_rows: List[List[int]]):
