@@ -1,4 +1,5 @@
 import argparse
+import copy
 import random
 from pathlib import Path
 import sqlite3
@@ -127,21 +128,21 @@ def append_dice_words(dice_nums: List[List[Union[int, str]]]):
         dice_nums: The list containing rows of numbers, whose words will be determined.
 
     Returns:
-        The mutated list that has words from the word list appended to each row.
+        The a new list that has words from the word list appended to each row of the original list of numbers.
     """
-
+    nums_with_words = copy.deepcopy(dice_nums)
     conn = sqlite3.connect(DB)
     cur = conn.cursor()
 
     with conn:
-        for i, dice_row in enumerate(dice_nums):
+        for i, dice_row in enumerate(nums_with_words):
             # turn the list of ins into a single int
             single_number = int(''.join([str(x) for x in dice_row]))
 
             # find the corresponding word list word and append it to the dice row
             word = dice_db.get_word(conn, single_number)
-            dice_nums[i].append(word)
-    return dice_nums
+            nums_with_words[i].append(word)
+    return nums_with_words
 
 
 def get_dice_and_words(dice_rows: List[List[int]]):
