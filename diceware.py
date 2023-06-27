@@ -31,6 +31,9 @@ class DiceRows:
         for row in self.dice_rows:
             self.randomize_one(0)
 
+    def get_all_rows(self):
+        return self.dice_rows
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
