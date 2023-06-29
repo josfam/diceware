@@ -163,7 +163,10 @@ def build_grid(dice_and_words: List[List[Union[int, str]]]):
     for row in dice_and_words:
         boxed_items = []
         for item in row:
-            boxed_item = Table(show_header=False, box=box.ROUNDED)
+            if isinstance(item, str):
+                boxed_item = Table(show_header=False, box=box.ROUNDED, min_width=14)
+            else:
+                boxed_item = Table(show_header=False, box=box.ROUNDED)
             boxed_item.add_row(str(item))
             boxed_items.append(boxed_item)
         grid.add_row(*boxed_items)
