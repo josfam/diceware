@@ -65,7 +65,7 @@ def main():
     # show the first roll of dice
     dice_numbers = make_dice_nums(rows, DICE_NUMBER)
     dice_rows = DiceRows(dice_numbers)
-    console.print(get_dice_and_words(dice_numbers))
+    console.print(build_grid(dice_and_words))
 
     while True:
         # show options menu and input line
@@ -82,23 +82,23 @@ def main():
                 if 1 <= num_part <= len(dice_numbers):
                     clear_lines()
                     dice_rows.randomize_one(num_part - 1)
-                    console.print(get_dice_and_words(dice_numbers))
+                    console.print(build_grid(dice_and_words))
                 else:
                     clear_lines()
-                    console.print(get_dice_and_words(dice_numbers))
+                    console.print(build_grid(dice_and_words))
             # reroll all the dice in all rows
             case 'r':
                 clear_lines()
                 dice_numbers = make_dice_nums(rows, DICE_NUMBER)
                 dice_rows = DiceRows(dice_numbers)
-                console.print(get_dice_and_words(dice_numbers))
+                console.print(build_grid(dice_and_words))
             case 'q':
                 print('Goodbye!')
                 sys.exit()
             # don't change any of the dice or words
             case _:
                 clear_lines()
-                console.print(get_dice_and_words(dice_numbers))
+                console.print(build_grid(dice_and_words))
 
 
 def make_dice_nums(row_count: int, dice_per_row: int) -> List[List[int]]:
@@ -145,7 +145,7 @@ def append_dice_words(dice_nums: List[List[Union[int, str]]]):
     return nums_with_words
 
 
-def get_dice_and_words(dice_rows: List[List[int]]):
+def build_grid(dice_and_words: List[List[Union[int, str]]]):
     """Renders and returns a grid of boxes that contain all dice rows,
     and the word that the dice in that row correspond to.
 
@@ -155,25 +155,16 @@ def get_dice_and_words(dice_rows: List[List[int]]):
     Returns:
         A grid of boxes that contain all dice rows, and the word that the dice in that row correspond to.
     """
-    conn = sqlite3.connect(DB)
     grid = Table.grid(collapse_padding=True, padding=0)
 
-    for row in dice_rows:
-        dice_nums_combined = []
-        die_faces = []
-        for die in row:
-            dice_nums_combined.append(str(die))
-            die_face = Table(show_header=False, box=box.ROUNDED)
-            die_face.add_row(str(die))
-            die_faces.append(die_face)
+    for row in dice_and_words:
+        boxed_items = []
+        for item in row:
+            boxed_item = Table(show_header=False, box=box.ROUNDED)
+            boxed_item.add_row(str(item))
+            boxed_items.append(boxed_item)
+        grid.add_row(*boxed_items)
 
-        # fetch the word that corresponds to this number, and add it to the row
-        combined_num = int(''.join(dice_nums_combined))
-        word_face = Table(show_header=False, box=box.ROUNDED, min_width=14)
-        word = dice_db.get_word(conn, combined_num)
-        word_face.add_row(word)
-        die_faces.append(word_face)
-        grid.add_row(*die_faces)
     return grid
 
 
