@@ -160,7 +160,7 @@ def build_grid(dice_and_words: List[List[Union[int, str]]]):
     """
     grid = Table.grid(collapse_padding=True, padding=0)
 
-    for row in dice_and_words:
+    for row_num, row in enumerate(dice_and_words):
         boxed_items = []
         for item in row:
             if isinstance(item, str):
@@ -169,6 +169,15 @@ def build_grid(dice_and_words: List[List[Union[int, str]]]):
                 boxed_item = Table(show_header=False, box=box.ROUNDED)
             boxed_item.add_row(str(item))
             boxed_items.append(boxed_item)
+
+        # fit the row label into its own border-less grid element
+        row_label = Table.grid()
+        row_label.add_column(justify='right', min_width=2)
+        row_label.add_row('')
+        row_label.add_row(f'[plum4]{str(row_num + 1)}')
+        row_label.add_row('')
+        boxed_items.append(row_label)
+
         grid.add_row(*boxed_items)
 
     return grid
