@@ -41,8 +41,8 @@ parser.add_argument(
     '-n',
     '--numdice',
     type=int,
-    default=3,
-    help='How many dice rows you want to roll. Defaults to 3',
+    default=5,
+    help='How many dice rows you want to roll. Defaults to 5',
 )
 args = parser.parse_args()
 rows = args.numdice
