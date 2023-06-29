@@ -65,6 +65,7 @@ def main():
     # show the first roll of dice
     dice_numbers = make_dice_nums(rows, DICE_NUMBER)
     dice_rows = DiceRows(dice_numbers)
+    dice_and_words = append_dice_words(dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
 
     while True:
@@ -82,6 +83,7 @@ def main():
                 if 1 <= num_part <= len(dice_numbers):
                     clear_lines()
                     dice_rows.randomize_one(num_part - 1)
+                    dice_and_words = append_dice_words(dice_rows.get_all_rows())
                     console.print(build_grid(dice_and_words))
                 else:
                     clear_lines()
@@ -91,6 +93,7 @@ def main():
                 clear_lines()
                 dice_numbers = make_dice_nums(rows, DICE_NUMBER)
                 dice_rows = DiceRows(dice_numbers)
+                dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
             case 'q':
                 print('Goodbye!')
