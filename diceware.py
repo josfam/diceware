@@ -164,10 +164,14 @@ def build_grid(dice_and_words: List[List[Union[int, str]]]):
         boxed_items = []
         for item in row:
             if isinstance(item, str):
+                color_start = '[bold][deep_sky_blue3]'
+                color_stop = '[/bold][/deep_sky_blue3]'
                 boxed_item = Table(show_header=False, box=box.ROUNDED, min_width=14)
             else:
+                color_start = ''
+                color_stop = ''
                 boxed_item = Table(show_header=False, box=box.ROUNDED)
-            boxed_item.add_row(str(item))
+            boxed_item.add_row(f'{color_start}{str(item)}{color_stop}')
             boxed_items.append(boxed_item)
 
         # fit the row label into its own border-less grid element
