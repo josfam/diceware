@@ -20,19 +20,29 @@ DB = 'wordlist.db'
 
 
 class DiceRows:
+    """A container for holding and manipulating the list of numbers representing
+    dice faces.
+    """
     def __init__(self, dice_rows: List[List[int]]):
         self.dice_rows = dice_rows
 
     def randomize_one(self, row: int) -> None:
+        """Changes, in place, the numbers of the specified row.
+
+        Args:
+            row: The row of the list, containing the numbers to change.
+        """
         self.dice_rows[row] = []
         for _ in range(5):
             self.dice_rows[row].append(random.randint(1, DICE_FACES))
 
     def randomize_all(self) -> None:
+        """Changes, in place, all the numbers of all the rows in the list."""
         for row in self.dice_rows:
             self.randomize_one(0)
 
-    def get_all_rows(self):
+    def get_all_rows(self) -> List[List[int]]:
+        """Returns the list containing all numbers"""
         return self.dice_rows
 
 
