@@ -23,6 +23,7 @@ class DiceRows:
     """A container for holding and manipulating the list of numbers representing
     dice faces.
     """
+
     def __init__(self, dice_rows: List[List[int]]):
         self.dice_rows = dice_rows
 
@@ -66,12 +67,6 @@ def main():
         conn = sqlite3.connect(DB)
         dice_db.create_wordlist_db(conn)
 
-    # build the options menu
-    options = Table(show_header=False, box=box.ROUNDED, min_width=39)
-    options.add_row('', '[bold]r[/bold]: reroll all dice')
-    options.add_row('→', '[bold]r[blue]n[/blue][/bold]: reroll just row [blue][bold]n')
-    options.add_row('', '[bold]q[/bold]: quit')
-
     # show the first roll of dice
     dice_numbers = make_dice_nums(rows, DICE_NUMBER)
     dice_rows = DiceRows(dice_numbers)
@@ -80,7 +75,7 @@ def main():
 
     while True:
         # show options menu and input line
-        console.print(options)
+        console.print(get_options())
         try:
             response = input('  → ')
         except (KeyboardInterrupt, EOFError):
@@ -105,6 +100,7 @@ def main():
                 dice_rows = DiceRows(dice_numbers)
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
+            # add one more row of dice and words to the current rows
             case 'q':
                 print('Goodbye!')
                 sys.exit()
@@ -112,6 +108,16 @@ def main():
             case _:
                 clear_lines()
                 console.print(build_grid(dice_and_words))
+
+
+def get_options():
+    """Returns the options available to the user"""
+    options = Table(show_header=False, box=box.ROUNDED, min_width=39)
+    options.add_row('', '[bold]r[/bold]: reroll all dice')
+    options.add_row('→', '[bold]r[blue]n[/blue][/bold]: reroll just row [blue][bold]n')
+    options.add_row('', '[bold]q[/bold]: quit')
+    options.add_row('', '[bold]+/-[/bold]: add or subtract a word')
+    return options
 
 
 def make_dice_nums(row_count: int, dice_per_row: int) -> List[List[int]]:
