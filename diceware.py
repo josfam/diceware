@@ -18,14 +18,44 @@ DICE_NUMBER = 5  # You need this many dice to get a word from the word list
 DICE_FACES = 6
 DB = 'wordlist.db'
 
+parser = argparse.ArgumentParser()
+parser.add_argument(
+    '-n',
+    '--numdice',
+    type=int,
+    default=5,
+    help='How many dice rows you want to roll. Defaults to 5',
+)
+args = parser.parse_args()
+rows = args.numdice
+console = Console()
 
 class DiceRows:
     """A container for holding and manipulating the list of numbers representing
     dice faces.
     """
 
-    def __init__(self, dice_rows: List[List[int]]):
-        self.dice_rows = dice_rows
+    def __init__(self, dice_per_row: int = DICE_NUMBER):
+        self.dice_rows = self.make_dice_nums(rows, dice_per_row)
+    
+    def make_dice_nums(self, row_count: int, dice_per_row: int) -> List[List[int]]:
+        """Returns random dice numbers, as a 2D list, with `row_count` rows, and
+        `dice_per_row` columns.
+
+        Args:
+            row_count: How many rows of dice numbers to return.
+            dice_per_row: How many dice are in a single row.
+
+        Returns:
+            Dice numbers, inside a 2D list of lists.
+        """
+        dice_numbers = []
+        for _ in range(row_count):
+            dice_row = []
+            for _ in range(dice_per_row):
+                dice_row.append(random.randint(1, DICE_FACES))
+            dice_numbers.append(dice_row)
+        return dice_numbers
 
     def randomize_one(self, row: int) -> None:
         """Changes, in place, the numbers of the specified row.
@@ -47,19 +77,6 @@ class DiceRows:
         return self.dice_rows
 
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    '-n',
-    '--numdice',
-    type=int,
-    default=5,
-    help='How many dice rows you want to roll. Defaults to 5',
-)
-args = parser.parse_args()
-rows = args.numdice
-console = Console()
-
-
 def main():
     clear_lines()
     # create the word list database if it does not exist
@@ -68,8 +85,7 @@ def main():
         dice_db.create_wordlist_db(conn)
 
     # show the first roll of dice
-    dice_numbers = make_dice_nums(rows, DICE_NUMBER)
-    dice_rows = DiceRows(dice_numbers)
+    dice_rows = DiceRows()
     dice_and_words = append_dice_words(dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
 
@@ -85,7 +101,7 @@ def main():
             # only allow an `r` followed by a valid row number
             case str() as s if s.startswith('r') and ''.join(s[1:]).isnumeric():
                 num_part = int(''.join(s[1:]))
-                if 1 <= num_part <= len(dice_numbers):
+                if 1 <= num_part <= len(dice_rows.get_all_rows()):
                     clear_lines()
                     dice_rows.randomize_one(num_part - 1)
                     dice_and_words = append_dice_words(dice_rows.get_all_rows())
@@ -96,8 +112,7 @@ def main():
             # reroll all the dice in all rows
             case 'r':
                 clear_lines()
-                dice_numbers = make_dice_nums(rows, DICE_NUMBER)
-                dice_rows = DiceRows(dice_numbers)
+                dice_rows = DiceRows()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
             # add one more row of dice and words to the current rows
@@ -118,26 +133,6 @@ def get_options():
     options.add_row('', '[bold]q[/bold]: quit')
     options.add_row('', '[bold]+/-[/bold]: add or subtract a word')
     return options
-
-
-def make_dice_nums(row_count: int, dice_per_row: int) -> List[List[int]]:
-    """Returns random dice numbers, as a 2D list, with `row_count` rows, and
-    `dice_per_row` columns.
-
-    Args:
-        row_count: How many rows of dice numbers to return.
-        dice_per_row: How many dice are in a single row.
-
-    Returns:
-        Dice numbers, inside a 2D list of lists.
-    """
-    dice_numbers = []
-    for _ in range(row_count):
-        dice_row = []
-        for _ in range(dice_per_row):
-            dice_row.append(random.randint(1, DICE_FACES))
-        dice_numbers.append(dice_row)
-    return dice_numbers
 
 
 def append_dice_words(dice_nums: List[List[Union[int, str]]]):
