@@ -114,30 +114,23 @@ def main():
                 if 1 <= num_part <= len(dice_rows.get_all_rows()):
                     dice_rows.randomize_one(num_part - 1)
                     dice_and_words = append_dice_words(dice_rows.get_all_rows())
-                    console.print(build_grid(dice_and_words))
-                else:
-                    console.print(build_grid(dice_and_words))
             # reroll all the dice in all rows
             case 'r':
                 dice_rows.randomize_all()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
-                console.print(build_grid(dice_and_words))
             # add one more row of dice to the current rows
             case '+':
                 dice_rows.add_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
-                console.print(build_grid(dice_and_words))
             # remove the last row of dice from the current rows
             case '-':
                 dice_rows.remove_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
-                console.print(build_grid(dice_and_words))
             case 'q':
                 print('Goodbye!')
                 sys.exit()
-            # don't change any of the dice or words
-            case _:
-                console.print(build_grid(dice_and_words))
+        # show the current row state
+        console.print(build_grid(dice_and_words))
 
 
 def get_options():
