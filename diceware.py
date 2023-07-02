@@ -30,6 +30,7 @@ args = parser.parse_args()
 rows = args.numdice
 console = Console()
 
+
 class DiceRows:
     """A container for holding and manipulating the list of numbers representing
     dice faces.
@@ -37,7 +38,7 @@ class DiceRows:
 
     def __init__(self, dice_per_row: int = DICE_NUMBER):
         self.dice_rows = self.make_dice_nums(rows, dice_per_row)
-    
+
     def make_dice_nums(self, row_count: int, dice_per_row: int) -> List[List[int]]:
         """Returns random dice numbers, as a 2D list, with `row_count` rows, and
         `dice_per_row` columns.
@@ -63,9 +64,7 @@ class DiceRows:
         Args:
             row: The row of the list, containing the numbers to change.
         """
-        self.dice_rows[row] = []
-        for _ in range(5):
-            self.dice_rows[row].append(random.randint(1, DICE_FACES))
+        self.dice_rows[row] = [random.randint(1, DICE_FACES) for _ in range(DICE_NUMBER)]
 
     def randomize_all(self) -> None:
         """Changes, in place, all the numbers of all the rows in the list."""
