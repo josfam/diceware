@@ -102,7 +102,7 @@ def main():
         # show options menu and input line
         console.print(get_options())
         try:
-            response = input('  → ')
+            response = input('Enter an option (q to quit) → ')
         except (KeyboardInterrupt, EOFError):
             sys.exit('Goodbye!')
 
