@@ -148,10 +148,10 @@ def main():
 def get_options():
     """Returns the options available to the user"""
     options = Table(show_header=False, box=box.ROUNDED, min_width=39)
-    options.add_row('', '[bold]r[/bold]: reroll all dice')
-    options.add_row('→', '[bold]r[blue]n[/blue][/bold]: reroll just row [blue][bold]n')
-    options.add_row('', '[bold]q[/bold]: quit')
-    options.add_row('', '[bold]+/-[/bold]: add or subtract a word')
+    options.add_row('[bold]r[/bold]: reroll all dice')
+    options.add_row('[bold]r[blue]n[/blue][/bold]: reroll just row [blue][bold]n')
+    options.add_row('[bold]q[/bold]: quit')
+    options.add_row('[bold]+/-[/bold]: add or subtract a word')
     return options
 
 
