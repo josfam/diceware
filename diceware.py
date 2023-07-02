@@ -17,6 +17,7 @@ import dice_db
 DICE_NUMBER = 5  # You need this many dice to get a word from the word list
 DICE_FACES = 6
 DB = 'wordlist.db'
+MIN_ROWS = 3  # One cannot have less than MIN_ROWS rows on display
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -75,6 +76,15 @@ class DiceRows:
         """Returns the list containing all numbers"""
         return self.dice_rows
 
+    def add_row(self) -> None:
+        """Adds one more row of numbers to the current list of numbers."""
+        self.dice_rows.append([random.randint(1, DICE_FACES) for _ in range(DICE_NUMBER)])
+
+    def remove_row(self) -> None:
+        """Removes the last row of numbers from the current list of numbers."""
+        if len(self.dice_rows) > MIN_ROWS:
+            self.dice_rows.pop()
+
 
 def main():
     clear_lines()
@@ -114,7 +124,18 @@ def main():
                 dice_rows.randomize_all()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
-            # add one more row of dice and words to the current rows
+            # add one more row of dice to the current rows
+            case '+':
+                clear_lines()
+                dice_rows.add_row()
+                dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                console.print(build_grid(dice_and_words))
+            # remove the last row of dice from the current rows
+            case '-':
+                clear_lines()
+                dice_rows.remove_row()
+                dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                console.print(build_grid(dice_and_words))
             case 'q':
                 print('Goodbye!')
                 sys.exit()
