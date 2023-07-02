@@ -106,33 +106,29 @@ def main():
         except (KeyboardInterrupt, EOFError):
             sys.exit('Goodbye!')
 
+        clear_lines()
         match response.lower():
             # only allow an `r` followed by a valid row number
             case str() as s if s.startswith('r') and ''.join(s[1:]).isnumeric():
                 num_part = int(''.join(s[1:]))
                 if 1 <= num_part <= len(dice_rows.get_all_rows()):
-                    clear_lines()
                     dice_rows.randomize_one(num_part - 1)
                     dice_and_words = append_dice_words(dice_rows.get_all_rows())
                     console.print(build_grid(dice_and_words))
                 else:
-                    clear_lines()
                     console.print(build_grid(dice_and_words))
             # reroll all the dice in all rows
             case 'r':
-                clear_lines()
                 dice_rows.randomize_all()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
             # add one more row of dice to the current rows
             case '+':
-                clear_lines()
                 dice_rows.add_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
             # remove the last row of dice from the current rows
             case '-':
-                clear_lines()
                 dice_rows.remove_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
@@ -141,7 +137,6 @@ def main():
                 sys.exit()
             # don't change any of the dice or words
             case _:
-                clear_lines()
                 console.print(build_grid(dice_and_words))
 
 
