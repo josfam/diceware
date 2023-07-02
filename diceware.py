@@ -68,8 +68,8 @@ class DiceRows:
 
     def randomize_all(self) -> None:
         """Changes, in place, all the numbers of all the rows in the list."""
-        for row in self.dice_rows:
-            self.randomize_one(0)
+        for index, row in enumerate(self.dice_rows):
+            self.randomize_one(index)
 
     def get_all_rows(self) -> List[List[int]]:
         """Returns the list containing all numbers"""
@@ -111,7 +111,7 @@ def main():
             # reroll all the dice in all rows
             case 'r':
                 clear_lines()
-                dice_rows = DiceRows()
+                dice_rows.randomize_all()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 console.print(build_grid(dice_and_words))
             # add one more row of dice and words to the current rows
