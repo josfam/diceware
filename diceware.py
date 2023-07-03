@@ -126,6 +126,9 @@ def main():
         try:
             response = input('Enter an option (q to quit) → ')
         except (KeyboardInterrupt, EOFError):
+            clear_lines()
+            console.print(build_grid(redact_contents(dice_and_words)))
+            console.print(options)
             sys.exit('Goodbye!')
 
         clear_lines()
@@ -156,6 +159,8 @@ def main():
                 notifs.message = f'\n[bold][deep_sky_blue3]{words}\n'
                 continue
             case 'q':
+                console.print(build_grid(redact_contents(dice_and_words)))
+                console.print(options)
                 print('Goodbye!')
                 sys.exit()
             # show a notification for an invalid choice
@@ -204,6 +209,22 @@ def append_dice_words(dice_nums: List[List[Union[int, str]]]):
             word = dice_db.get_word(conn, single_number)
             nums_with_words[i].append(word)
     return nums_with_words
+
+
+def redact_contents(dice_and_words: List[List[Union[int, str]]]):
+    """Returns a redacted list, which is a result of replacing numbers with `0`s,
+    and words with `XXXXX`.
+    This redacted list is only used when the user quits the program, as a somewhat pleasant
+    UI touch.
+
+    Args:
+        dice_and_words: The list of numbers and words to be redacted.
+    """
+    redacted_list = dice_and_words
+    for index, row in enumerate(dice_and_words):
+        dice_and_words[index] = [0, 0, 0, 0, 0, 'XXXXX']
+
+    return redacted_list
 
 
 def build_grid(dice_and_words: List[List[Union[int, str]]]):
