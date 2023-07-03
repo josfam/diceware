@@ -152,7 +152,7 @@ def main():
             case 'p':
                 console.print(build_grid(dice_and_words))
                 words = ' '.join([x[-1] for x in dice_and_words])
-                notifs.message = f'\n[deep_sky_blue3]{words}\n'
+                notifs.message = f'\n[bold][deep_sky_blue3]{words}\n'
                 continue
             case 'q':
                 print('Goodbye!')
