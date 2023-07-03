@@ -175,7 +175,7 @@ def get_options():
         '+/-': 'add or remove one row',
         'q': 'quit'
     }
-    options = Table(show_header=False, box=box.ROUNDED, min_width=39)
+    options = Table(show_header=False, box=box.ROUNDED, min_width=42)
     
     for option, desc in option_descriptions.items():
          options.add_row('[bold]{:>3}[/bold]: {}'.format(option, desc))
