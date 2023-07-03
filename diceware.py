@@ -157,6 +157,10 @@ def main():
             case 'q':
                 print('Goodbye!')
                 sys.exit()
+            # show a notification for an invalid choice
+            case _:
+                notifs.message = f"\n[red]Invalid choice. Please try again.\n"
+
         # show the current row state
         console.print(build_grid(dice_and_words))
 
