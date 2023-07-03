@@ -32,6 +32,23 @@ rows = args.numdice
 console = Console()
 
 
+class Notifications:
+    """Handles the posting of notification messages to the User Interface"""
+
+    def __init__(self, msg=''):
+        self.message = msg
+        self.has_message = False
+
+    def clear(self):
+        """Removes any stored messages."""
+        self.message = ''
+        self.has_message = False
+
+    def message_exists(self):
+        """Returns True if there is a message to post. Returns False otherwise"""
+        return not self.message == ''
+
+
 class DiceRows:
     """A container for holding and manipulating the list of numbers representing
     dice faces.
