@@ -127,7 +127,7 @@ def main():
             response = input('Enter an option (q to quit) → ')
         except (KeyboardInterrupt, EOFError):
             clear_lines()
-            console.print(build_grid(redact_contents(dice_and_words)))
+            console.print(build_grid(redact_contents(dice_and_words), redact_row_labels=True))
             console.print(options)
             sys.exit('Goodbye!')
 
@@ -159,7 +159,7 @@ def main():
                 notifs.message = f'\n[bold][deep_sky_blue3]{words}\n'
                 continue
             case 'q':
-                console.print(build_grid(redact_contents(dice_and_words)))
+                console.print(build_grid(redact_contents(dice_and_words), redact_row_labels=True))
                 console.print(options)
                 print('Goodbye!')
                 sys.exit()
@@ -227,7 +227,7 @@ def redact_contents(dice_and_words: List[List[Union[int, str]]]):
     return redacted_list
 
 
-def build_grid(dice_and_words: List[List[Union[int, str]]]):
+def build_grid(dice_and_words: List[List[Union[int, str]]], redact_row_labels=False):
     """Renders and returns a grid of boxes that contain all dice rows,
     and the word that the dice in that row correspond to.
 
@@ -257,7 +257,10 @@ def build_grid(dice_and_words: List[List[Union[int, str]]]):
         row_label = Table.grid()
         row_label.add_column(justify='right', min_width=2)
         row_label.add_row('')
-        row_label.add_row(f'[plum4]{str(row_num + 1)}')
+        if not redact_row_labels:
+            row_label.add_row(f'[plum4]{str(row_num + 1)}')
+        else:
+            row_label.add_row(f'[plum4]0')
         row_label.add_row('')
         boxed_items.append(row_label)
 
