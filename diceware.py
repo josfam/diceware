@@ -5,7 +5,6 @@ from pathlib import Path
 import sqlite3
 import sys
 import os
-import re
 
 from rich import box
 from rich.console import Console
