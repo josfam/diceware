@@ -110,14 +110,19 @@ def main():
         conn = sqlite3.connect(DB)
         dice_db.create_wordlist_db(conn)
 
+    notifs = Notifications()
+
     # show the first roll of dice
     dice_rows = DiceRows()
     dice_and_words = append_dice_words(dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
 
     while True:
-        # show options menu and input line
+        # show options menu, any notifications, and input prompt
         console.print(get_options())
+        if notifs.message_exists():
+            console.print(notifs.message)
+            notifs.clear()
         try:
             response = input('Enter an option (q to quit) → ')
         except (KeyboardInterrupt, EOFError):
