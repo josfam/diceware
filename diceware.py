@@ -150,6 +150,11 @@ def main():
                     notifs.message = f"\n[red]Can't remove any further. {MIN_ROWS} rows is the minimum.\n"
                 dice_rows.remove_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
+            case 'p':
+                console.print(build_grid(dice_and_words))
+                words = ' '.join([x[-1] for x in dice_and_words])
+                notifs.message = f'\n[deep_sky_blue3]{words}\n'
+                continue
             case 'q':
                 print('Goodbye!')
                 sys.exit()
@@ -162,6 +167,7 @@ def get_options():
     options = Table(show_header=False, box=box.ROUNDED, min_width=39)
     options.add_row('[bold]r[/bold]: reroll all dice')
     options.add_row('[bold]r[blue]n[/blue][/bold]: reroll just row [blue][bold]n')
+    options.add_row('[bold]p[/bold]: print words')
     options.add_row('[bold]q[/bold]: quit')
     options.add_row('[bold]+/-[/bold]: add or subtract a word')
     return options
