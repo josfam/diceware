@@ -146,6 +146,8 @@ def main():
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
             # remove the last row of dice from the current rows
             case '-':
+                if len(dice_rows.get_all_rows()) == MIN_ROWS:
+                    notifs.message = f"\n[red]Can't remove any further. {MIN_ROWS} rows is the minimum.\n"
                 dice_rows.remove_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
             case 'q':
