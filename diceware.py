@@ -115,10 +115,11 @@ def main():
     dice_rows = DiceRows()
     dice_and_words = append_dice_words(dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
+    options = get_options()
 
     while True:
         # show options menu, any notifications, and input prompt
-        console.print(get_options())
+        console.print(options)
         if notifs.message_exists():
             console.print(notifs.message)
             notifs.clear()
