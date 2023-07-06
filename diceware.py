@@ -1,15 +1,15 @@
 import argparse
 import copy
+import os
 import random
-from pathlib import Path
 import sqlite3
 import sys
-import os
+from pathlib import Path
+from typing import List, Union
 
 from rich import box
 from rich.console import Console
 from rich.table import Table
-from typing import List, Union
 
 import dice_db
 
@@ -178,12 +178,12 @@ def get_options():
         'rn': 'reroll only the nth row',
         'p': 'print words',
         '+/-': 'add or remove one row',
-        'q': 'quit'
+        'q': 'quit',
     }
     options = Table(show_header=False, box=box.ROUNDED, min_width=42)
-    
+
     for option, desc in option_descriptions.items():
-         options.add_row('[bold]{:>3}[/bold]: {}'.format(option, desc))
+        options.add_row('[bold]{:>3}[/bold]: {}'.format(option, desc))
     return options
 
 
