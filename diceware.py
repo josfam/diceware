@@ -53,7 +53,7 @@ class DiceRows:
     dice faces.
     """
 
-    def __init__(self, dice_per_row: int = DICE_NUMBER):
+    def __init__(self, rows: int = 5, dice_per_row: int = DICE_NUMBER):
         self.dice_rows = self.make_dice_nums(rows, dice_per_row)
 
     def make_dice_nums(self, row_count: int, dice_per_row: int) -> List[List[int]]:
@@ -112,7 +112,7 @@ def main():
     notifs = Notifications()
 
     # show the first roll of dice
-    dice_rows = DiceRows()
+    dice_rows = DiceRows(rows=rows)
     dice_and_words = append_dice_words(dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
     options = get_options()
