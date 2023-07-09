@@ -139,6 +139,9 @@ def main():
                 if 1 <= num_part <= len(dice_rows.get_all_rows()):
                     dice_rows.randomize_one(num_part - 1)
                     dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                else:
+                    message = "[red]\nThere is no such row. Please try again\n"
+                    notifs.message = message
             # reroll all the dice in all rows
             case 'r':
                 dice_rows.randomize_all()
