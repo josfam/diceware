@@ -40,7 +40,7 @@ def main():
     notifs = Notifications()
 
     # show the first roll of dice
-    dice_rows = DiceRows()
+    dice_rows = DiceRows(rows=rows)
     dice_and_words = append_dice_words(dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
     options = get_options()
