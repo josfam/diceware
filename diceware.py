@@ -86,6 +86,10 @@ class DiceRows:
         if len(self.dice_rows) > MIN_ROWS:
             self.dice_rows.pop()
 
+    def __len__(self) -> int:
+        """Returns the length of the 2D list of numbers"""
+        return len(self.dice_rows)
+
 
 def get_options():
     """Returns the options available to the user"""

@@ -64,7 +64,7 @@ def main():
             # only allow an `r` followed by a valid row number
             case str() as s if s.startswith('r') and ''.join(s[1:]).isnumeric():
                 num_part = int(''.join(s[1:]))
-                if 1 <= num_part <= len(dice_rows.get_all_rows()):
+                if 1 <= num_part <= len(dice_rows):
                     dice_rows.randomize_one(num_part - 1)
                     dice_and_words = append_dice_words(dice_rows.get_all_rows())
                 else:
@@ -80,7 +80,7 @@ def main():
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
             # remove the last row of dice from the current rows
             case '-':
-                if len(dice_rows.get_all_rows()) == MIN_ROWS:
+                if len(dice_rows) == MIN_ROWS:
                     notifs.message = f"\n[red]Can't remove any further. {MIN_ROWS} rows is the minimum.\n"
                 dice_rows.remove_row()
                 dice_and_words = append_dice_words(dice_rows.get_all_rows())
