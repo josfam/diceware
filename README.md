@@ -14,12 +14,12 @@ The concept materialized for me when I used [this website—d20key](https://d20k
 by [Carey Parker—of Firewalls Don't Stop Dragons fame](https://firewallsdontstopdragons.com/podcast/)—et al, to get familiar with dice  ware in general.
 \
 \
-Matter of fact, this project tries to mimic—as closely as possible—the d20key site's functionality.
+Matter of fact, this project tries to mimic—as closely as possible—the d20key site's functionality,
+\
+albeit using 5-sided dice.
 \
 \
 In my day-to-day, I do use a password manager to create these passphrases for me,
 \
-but the diceware method is a good way to get passphrases if one does not—for some reason—cannot
-\
-use a password manager.
+but the diceware method is a good way to get passphrases if one does not have a password manager.
 
