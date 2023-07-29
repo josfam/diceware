@@ -22,4 +22,38 @@ albeit using 5-sided dice.
 In my day-to-day, I do use a password manager to create these passphrases for me,
 \
 but the diceware method is a good way to get passphrases if one does not have a password manager.
-
+## How to run the program
+### 1. Clone this repository
+Run 
+```
+git clone https://github.com/josfam/diceware.git
+```
+in your terminal window to get the files.
+### 2. Install poetry on your computer
+> #### On linux/Mac (or WSL for Windows):
+- Run [the installation script found under the "Linux, macOS, Windows (WSL)" section on the Poetry site](https://python-poetry.org/docs/#installing-with-the-official-installer)
+> #### On a Windows computer (Powershell):
+- Run [the installation script found under the "Windows (Powershell)" section on the Poetry site](https://python-poetry.org/docs/#installing-with-the-official-installer)
+### 3. Navigate to the project folder
+Make sure to open the project folder from your terminal.
+### 4. Activate the poetry virtual environment
+Run:
+```
+poetry shell
+```
+to enter into the poetry virtual environment:
+### 5. Install project dependencies
+Run:
+```
+poetry install
+```
+to install the dependencies necessary for the program
+### 6. Run the program
+> #### On linux/Mac (or WSL for Windows):
+```
+python3 app.py
+```
+> #### On Windows:
+```
+python app.py
+```
