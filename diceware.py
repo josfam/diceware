@@ -1,6 +1,5 @@
 """Generates a passphrase as a result of rolling 5, 6-sided dice."""
 import copy
-import os
 import random
 import sqlite3
 from typing import List, Union
@@ -118,7 +117,6 @@ def append_dice_words(dice_nums: List[List[Union[int, str]]]):
     """
     nums_with_words = copy.deepcopy(dice_nums)
     conn = sqlite3.connect(DB)
-    cur = conn.cursor()
 
     with conn:
         for i, dice_row in enumerate(nums_with_words):
@@ -180,7 +178,7 @@ def build_grid(dice_and_words: List[List[Union[int, str]]], redact_row_labels=Fa
         if not redact_row_labels:
             row_label.add_row(f'[plum4]{str(row_num + 1)}')
         else:
-            row_label.add_row(f'[plum4]0')
+            row_label.add_row('[plum4]0')
         row_label.add_row('')
         boxed_items.append(row_label)
 

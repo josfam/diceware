@@ -3,10 +3,8 @@ import os
 import sqlite3
 import sys
 from pathlib import Path
-from typing import List, Union
 
 from rich.console import Console
-from rich.table import Table
 
 import dice_db
 
@@ -26,8 +24,6 @@ parser.add_argument(
 args = parser.parse_args()
 rows = args.numdice
 console = Console()
-
-from diceware import *
 
 
 def main():
@@ -96,7 +92,7 @@ def main():
                 sys.exit()
             # show a notification for an invalid choice
             case _:
-                notifs.message = f"\n[red]Invalid choice. Please try again.\n"
+                notifs.message = "\n[red]Invalid choice. Please try again.\n"
 
         # show the current row state
         console.print(build_grid(dice_and_words))
