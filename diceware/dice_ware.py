@@ -7,7 +7,7 @@ from typing import List, Union
 from rich import box
 from rich.table import Table
 
-import dice_db
+from . import dice_db
 
 DICE_NUMBER = 5  # You need this many dice to get a word from the word list
 DICE_FACES = 6

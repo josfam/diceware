@@ -6,9 +6,9 @@ from pathlib import Path
 
 from rich.console import Console
 
-import dice_db
+from diceware import dice_db
 
-from dice_ware import *
+from diceware.dice_ware import *
 
 DB = 'wordlist.db'
 MIN_ROWS = 3  # One cannot have less than MIN_ROWS rows on display
