@@ -11,7 +11,6 @@ from . import dice_db
 
 DICE_NUMBER = 5  # You need this many dice to get a word from the word list
 DICE_FACES = 6
-DB = 'wordlist.db'
 MIN_ROWS = 3  # One cannot have less than MIN_ROWS rows on display
 
 
@@ -106,17 +105,17 @@ def get_options():
     return options
 
 
-def append_dice_words(dice_nums: List[List[Union[int, str]]]):
+def append_dice_words(conn: sqlite3.Connection, dice_nums: List[List[Union[int, str]]]):
     """Appends, to each row of numbers, a word from the word list that corresponds to dice numbers in that row.
 
     Args:
+        conn: The sqlite3 database connection to use for database queries.
         dice_nums: The list containing rows of numbers, whose words will be determined.
 
     Returns:
         The a new list that has words from the word list appended to each row of the original list of numbers.
     """
     nums_with_words = copy.deepcopy(dice_nums)
-    conn = sqlite3.connect(DB)
 
     with conn:
         for i, dice_row in enumerate(nums_with_words):

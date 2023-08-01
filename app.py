@@ -33,11 +33,12 @@ def main():
         conn = sqlite3.connect(DB)
         dice_db.create_wordlist_db(conn)
 
+    conn = sqlite3.connect(DB)
     notifs = Notifications()
 
     # show the first roll of dice
     dice_rows = DiceRows(rows=rows)
-    dice_and_words = append_dice_words(dice_rows.get_all_rows())
+    dice_and_words = append_dice_words(conn, dice_rows.get_all_rows())
     console.print(build_grid(dice_and_words))
     options = get_options()
 
@@ -62,24 +63,24 @@ def main():
                 num_part = int(''.join(s[1:]))
                 if 1 <= num_part <= len(dice_rows):
                     dice_rows.randomize_one(num_part - 1)
-                    dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                    dice_and_words = append_dice_words(conn, dice_rows.get_all_rows())
                 else:
                     message = "[red]\nThere is no such row. Please try again\n"
                     notifs.message = message
             # reroll all the dice in all rows
             case 'r':
                 dice_rows.randomize_all()
-                dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                dice_and_words = append_dice_words(conn, dice_rows.get_all_rows())
             # add one more row of dice to the current rows
             case '+':
                 dice_rows.add_row()
-                dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                dice_and_words = append_dice_words(conn, dice_rows.get_all_rows())
             # remove the last row of dice from the current rows
             case '-':
                 if len(dice_rows) == MIN_ROWS:
                     notifs.message = f"\n[red]Can't remove any further. {MIN_ROWS} rows is the minimum.\n"
                 dice_rows.remove_row()
-                dice_and_words = append_dice_words(dice_rows.get_all_rows())
+                dice_and_words = append_dice_words(conn, dice_rows.get_all_rows())
             case 'p':
                 console.print(build_grid(dice_and_words))
                 words = ' '.join([x[-1] for x in dice_and_words])
