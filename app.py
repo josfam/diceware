@@ -10,7 +10,7 @@ from diceware import dice_db
 
 from diceware.dice_ware import *
 
-DB = 'wordlist.db'
+DB = Path('diceware', 'wordlist.db')
 MIN_ROWS = 3  # One cannot have less than MIN_ROWS rows on display
 
 parser = argparse.ArgumentParser()
@@ -29,7 +29,7 @@ console = Console()
 def main():
     clear_lines()
     # create the word list database if it does not exist
-    if not Path.exists(Path('wordlist.db')):
+    if not Path.exists(DB):
         conn = sqlite3.connect(DB)
         dice_db.create_wordlist_db(conn)
 
