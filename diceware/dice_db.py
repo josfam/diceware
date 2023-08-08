@@ -1,7 +1,10 @@
 import sqlite3
+from pathlib import Path
+
+WORDLIST_FILE = str(Path('diceware', 'eff_large_wordlist.txt'))
 
 
-def create_wordlist_db(db_connection: sqlite3.Connection, wordlist_file: str = "eff_large_wordlist.txt") -> None:
+def create_wordlist_db(db_connection: sqlite3.Connection, wordlist_file: str = WORDLIST_FILE) -> None:
     """Creates the database of numbers and words as a result of parsing
     the provided text file.
 
@@ -41,7 +44,13 @@ def create_wordlist_db(db_connection: sqlite3.Connection, wordlist_file: str = "
                     break
 
                 number, word = line.split()
-                conn.execute(add_number_and_word, (int(number), word))
+                conn.execute(
+                    add_number_and_word,
+                    (
+                        int(number),
+                        word,
+                    ),
+                )
 
 
 def get_word(db_connection: sqlite3.Connection, number: int) -> str:
