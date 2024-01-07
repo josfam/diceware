@@ -1,6 +1,10 @@
 # diceware
+
 Generate secure passphrases by rolling dice on the terminal, using the [EFF](https://www.eff.org/)'s [word list.](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt).
 
+## Demo
+
+<img src="demo/diceware-demo.gif" alt="Demo of the diceware program" width="450" height="450">
 
 ## Inspiration for the project
 
